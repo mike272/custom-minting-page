@@ -209,12 +209,12 @@
   right: 0;
   height: 100%;
   display: flex;
-  width: 280px;
+  width: 330px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: left;
-  background-color: #333;
-  padding: 12px;
+  background-color: #0e0e0e;
+  padding: 16px;
   gap: 10px;
   z-index: 1001;
 }
@@ -223,9 +223,9 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-size: 24px;
   justify-content: space-between;
   padding: 2rem;
-  background-color: #333;
   color: #fff;
   width: 100%;
   margin-top: 30px;
@@ -243,6 +243,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-left: 10px;
 }
 
 .wallet-icon {
@@ -317,4 +318,24 @@
 .upload-icon {
   font-size: 24px;
   color: #9ba2ae;
+}
+
+.wallet-button {
+  display: flex;
+  flex-direction: row;
+  width: 220px;
+  padding-left: 14px;
+  padding-right: 14px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #222;
+  border-radius: 5px;
+}
+
+.wallet-image {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
 }
