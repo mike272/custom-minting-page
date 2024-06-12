@@ -51,19 +51,14 @@
   max-width: 500px;
 }
 
-.file-input,
+.file-input-container,
 .input,
 .textarea {
   width: 100%;
   padding: 1rem;
   margin-bottom: 1rem;
-  border: none;
+  border: 1px solid #9ba2ae;
   border-radius: 8px;
-}
-
-.file-input {
-  background-color: #333;
-  color: #fff;
 }
 
 .input,
@@ -113,7 +108,7 @@
 }
 
 .gradient-text {
-  background: linear-gradient(to right, purple, pink);
+  background: linear-gradient(to right, rgb(60, 131, 236), rgb(179, 56, 179));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -121,6 +116,10 @@
   font-size: 1.5rem;
   font-weight: 600;
   padding-left: 5px;
+}
+
+.button-gradient {
+  background: linear-gradient(to right, rgb(60, 131, 236), rgb(179, 56, 179));
 }
 
 .header-container {
@@ -202,4 +201,120 @@
   color: #fff;
   min-height: 100vh;
   width: 100dvw;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  width: 280px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: left;
+  background-color: #333;
+  padding: 12px;
+  gap: 10px;
+  z-index: 1001;
+}
+
+.sidebar-top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  background-color: #333;
+  color: #fff;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.sidebar-bottom {
+  display: flex;
+  flex-direction: row;
+  font-size: small;
+  color: white;
+}
+
+.learn-more-text {
+  background: linear-gradient(to right, purple, pink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.wallet-icon {
+  color: white;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 15px;
+  border: 1px solid silver;
+  width: 80%;
+  padding: 40px;
+  margin-bottom: 40px;
+  background-color: rgba(255, 255, 255, 0.09);
+}
+
+.title-text {
+  font-size: 44px;
+  font-weight: 700;
+  background: linear-gradient(
+    90deg,
+    silver,
+    white,
+    silver,
+    white,
+    silver,
+    white,
+    silver,
+    white
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-input-label {
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #222;
+  color: #9ba2ae;
+}
+
+.small-text {
+  font-size: 0.875rem;
+  color: grey;
+}
+
+.file-upload-container {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  cursor: pointer;
+  flex-flow: column;
+  background-color: #222;
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px dashed #9ba2ae;
+  border-radius: 8px;
+}
+
+.upload-icon {
+  font-size: 24px;
+  color: #9ba2ae;
 }

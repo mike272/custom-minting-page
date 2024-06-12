@@ -1,22 +1,35 @@
 // pages/index.js
 "use client";
+import { ConnectSideBar } from "@/lib/components/connect-side-bar";
+import { Header } from "@/lib/components/header";
 import Head from "next/head";
 import { useState } from "react";
+import { useAccount } from "wagmi";
+import { MdOutlineFileUpload } from "react-icons/md";
 
 export default function Home() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
+  const { address, isConnected } = useAccount();
+  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
   const handleMintWithoutListing = () => {
-    // Handle minting without listing
+    if (isConnected) {
+    } else {
+      setIsSideBarOpen(true);
+    }
   };
 
   const handleMintAndListImmediately = () => {
-    // Handle minting and listing immediately
+    if (isConnected) {
+    } else {
+      setIsSideBarOpen(true);
+    }
   };
 
   return (
     <div className="main-page">
+      <Header onConnectClick={setIsSideBarOpen} />
+      <ConnectSideBar isOpen={isSideBarOpen} setOpen={setIsSideBarOpen} />
       <Head>
         <title>NFT Sea</title>
         <meta name="description" content="Mint New NFT" />
@@ -24,15 +37,34 @@ export default function Home() {
       </Head>
 
       <main className="container">
-        <h1 className="title">Mint New NFT</h1>
-        <p className="description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sem
-          tortor quis amet scelerisque vivamus egestas.
-        </p>
+        <div className="card">
+          <h1 className="title-text">MINT NEW NFT</h1>
+          <p className="description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sem
+            tortor quis amet scelerisque vivamus egestas.
+          </p>
+        </div>
 
         <div className="form">
-          <input type="file" accept="image/*" className="file-input" />
-
+          {/* <input type="file" accept="image/*" className="file-input" /> */}
+          <div
+            onClick={() => document?.getElementById("file-input")?.click()}
+            className="file-upload-container"
+          >
+            <input
+              type="file"
+              accept="image/*"
+              id="file-input"
+              className="file-input"
+            />
+            <div className="row">
+              <MdOutlineFileUpload className="upload-icon" />
+              <label htmlFor="file-input" className="file-input-label">
+                Upload File
+              </label>
+            </div>
+            <div className="small-text">Format supported</div>
+          </div>
           <input
             type="text"
             placeholder="NFT Title"
@@ -54,7 +86,7 @@ export default function Home() {
             </button>
             <button
               onClick={handleMintAndListImmediately}
-              className="button primary"
+              className="button button-gradient"
             >
               Mint and list immediately
             </button>
