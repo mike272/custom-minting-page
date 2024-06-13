@@ -1,24 +1,24 @@
 import { NextResponse, NextRequest } from "next/server";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 export async function POST(request: NextRequest) {
   try {
-    const data = await request.formData();
-    const file: File | null = data.get("file") as unknown as File;
+    const requestBody = await request.json();
+    const parsedBody = JSON.parse(requestBody.body);
+    const pinataMetadata = {
+      name: parsedBody.title,
+    };
+    const jsonToSend = {
+      pinataContent: JSON.stringify(parsedBody),
+      pinataMetadata: JSON.stringify(pinataMetadata),
+    };
 
-    data.append("file", file);
-    data.append("pinataMetadata", JSON.stringify({ name: file.name }));
-    const res = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {
+    const res = await fetch("https://api.pinata.cloud/pinning/pinJSONToIPFS", {
       method: "POST",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_JWT}`,
       },
-      body: data,
+      body: JSON.stringify(jsonToSend),
     });
     const resData = await res.json();
 

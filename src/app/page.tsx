@@ -27,26 +27,56 @@ export default function Home() {
 
   const [uploading, setUploading] = useState(false);
   const [cid, setCid] = useState("");
+  const [metadataCid, setMetadataCid] = useState("");
+
+  const uploadMetadata = async (fileCid) => {
+    try {
+      setUploading(true);
+      const metadata = { title, description, image: "ipfs://" + fileCid };
+
+      const res = await axios.post("/api/json", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(metadata),
+      });
+
+      setMetadataCid(res.data.IpfsHash);
+      messageApi.open({
+        type: "success",
+        content:
+          "Your file has been connected to your metadata, you can mint it now!",
+      });
+      setUploading(false);
+    } catch (e) {
+      console.log(e);
+      setUploading(false);
+      messageApi.open({
+        type: "error",
+        content: "Error uploading metadata, please try again!",
+      });
+    }
+  };
+
   const uploadFile = async (fileToUpload) => {
     try {
       setUploading(true);
 
       const formData = new FormData();
       formData.append("file", fileToUpload);
-      const metadata = { title, description };
-      formData.append("metadata", JSON.stringify(metadata));
-      formData.append("title", title);
-      formData.append("description", description);
 
-      const resData = await axios.post("/api/files", formData, {
+      const res = await axios.post("/api/files", formData, {
         maxBodyLength: Infinity,
       });
 
-      setCid(resData.data.IpfsHash);
+      setCid(res.data.IpfsHash);
+      uploadMetadata(res.data.IpfsHash);
+
       messageApi.open({
-        type: "success",
-        content: "Your file has been uploaded, you can mint a token now!",
+        content:
+          "Your image has been uploaded, plase wait while we link it to your metadata",
       });
+
       setUploading(false);
     } catch (e) {
       console.log(e);
