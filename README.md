@@ -1,4 +1,5 @@
 For @saksijas: This is mostly ready, just some minor work left with styling the modal, but you can start looking through it
+
 1. connecting wallet as designed on figma
 2. adding title, description, and file via form
 3. When you add a file, it is immediately sent to ipfs so first enter title and description
@@ -8,6 +9,8 @@ For @saksijas: This is mostly ready, just some minor work left with styling the 
 
    Contact me if you have problems adding correct env values, I used my own projectId
 
+![Full Screenshot](src/app/assets/full_screenshot.png)
+![Wallets Screenshot](src/app/assets/wallets.png)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
