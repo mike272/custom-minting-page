@@ -322,8 +322,9 @@
 
 .wallet-button {
   display: flex;
+  cursor: pointer;
   flex-direction: row;
-  width: 220px;
+  width: 250px;
   padding-left: 14px;
   padding-right: 14px;
   padding-top: 10px;
@@ -335,6 +336,7 @@
 }
 
 .wallet-image {
+  cursor: pointer;
   height: 20px;
   width: 20px;
   margin-right: 10px;

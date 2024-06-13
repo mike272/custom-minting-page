@@ -2,6 +2,7 @@
 import { WalletButton } from "@rainbow-me/rainbowkit";
 import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
+import { useAccount } from "wagmi";
 
 export function ConnectSideBar({
   isOpen,
@@ -10,6 +11,7 @@ export function ConnectSideBar({
   isOpen: boolean;
   setOpen: (open: boolean) => void;
 }) {
+  const { isConnected } = useAccount();
   function CustomWalletButton({
     ready,
     connect,
@@ -30,16 +32,26 @@ export function ConnectSideBar({
       fetchIconUrl();
     }, [connector]);
     return (
-      <div className="wallet-button">
+      <div
+        className="wallet-button"
+        style={{
+          cursor: !isConnected && ready ? "pointer" : "default",
+        }}
+        onClick={() => {
+          if (!isConnected && ready) {
+            connector?.connect();
+          }
+        }}
+      >
         <img className="wallet-image" src={icon ?? ""} alt={connector?.name} />
-        <button type="button" disabled={!ready} onClick={connect}>
+        <button type="button" disabled={!ready}>
           {connector?.name}
         </button>
       </div>
     );
   }
 
-  const walletsList = ["rainbow", "metamask", "coinbase", "phantom"];
+  const walletsList = ["rainbow", "metamask", "coinbase"];
 
   return (
     <div
@@ -66,7 +78,6 @@ export function ConnectSideBar({
             connect: any;
             connector: any;
           }) => {
-            console.log({ connector });
             return (
               <CustomWalletButton
                 ready={ready}
