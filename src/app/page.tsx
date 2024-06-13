@@ -5,12 +5,13 @@ import Head from "next/head";
 import { useState } from "react";
 import { useAccount } from "wagmi";
 import { MdOutlineFileUpload } from "react-icons/md";
-import { writeContract } from "wagmi/actions";
+import { useWriteContract } from "wagmi";
 import { wagmiConfig } from "@/lib/providers/providers";
 import axios from "axios";
 import FormData from "form-data";
 import { ConfirmationModal } from "@/lib/components/confirmation-modal";
 import { message } from "antd";
+import abiJson from "@/app/assets/Musharka721.json";
 
 export default function Home() {
   const [title, setTitle] = useState("");
@@ -20,10 +21,9 @@ export default function Home() {
   const [isSideBarOpen, setIsSideBarOpen] = useState(!isConnected);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const { writeContract } = useWriteContract();
 
   let filePinataUrl = "";
-  const ABI_json_url =
-    "https://github.com/LinumLabs/web3-task-abi/blob/dev/Musharka721.json";
 
   const [uploading, setUploading] = useState(false);
   const [cid, setCid] = useState("");
@@ -32,7 +32,12 @@ export default function Home() {
   const uploadMetadata = async (fileCid) => {
     try {
       setUploading(true);
-      const metadata = { title, description, image: "ipfs://" + fileCid };
+      const metadata = {
+        title,
+        description,
+        image: "ipfs://" + fileCid,
+        name: title,
+      };
 
       const res = await axios.post("/api/json", {
         headers: {
@@ -91,17 +96,16 @@ export default function Home() {
   const handleMintWithoutListing = async () => {
     if (isConnected) {
       try {
-        const abiResponse = await fetch(ABI_json_url);
-        const abi = await abiResponse.json();
-        const response = await writeContract(wagmiConfig, {
-          abi,
+        const response = await writeContract({
+          abi: abiJson["abi"],
           address: process.env.NEXT_PUBLIC_NFT_ADDRESS as `0x${string}`,
           functionName: "mint",
-          args: [title, description, filePinataUrl],
+          args: [address, "ipfs://" + metadataCid],
           chainId: 11155111,
           chain: undefined,
           account: address,
         });
+        console.log({ response });
         setIsModalOpen(true);
       } catch (e) {
         console.log(e);
@@ -121,7 +125,7 @@ export default function Home() {
       <Header onConnectClick={setIsSideBarOpen} />
       <ConnectSideBar isOpen={isSideBarOpen} setOpen={setIsSideBarOpen} />
       <ConfirmationModal
-        cid={cid}
+        cid={metadataCid}
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
         title={title}
